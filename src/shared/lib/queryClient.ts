@@ -6,8 +6,8 @@ import { mmkvStorageAdapter } from './storage'
 export const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 1000 * 60 * 5,        
-      gcTime: 1000 * 60 * 60 * 24,    
+      staleTime: 1000 * 60 * 5,
+      gcTime: 1000 * 60 * 60 * 24,
       retry: 2,
       refetchOnWindowFocus: false,
     },
@@ -22,5 +22,5 @@ const persister = createAsyncStoragePersister({
 persistQueryClient({
   queryClient,
   persister,
-  maxAge: 1000 * 60 * 60 * 24,        // 24 hours on disk
+  maxAge: 1000 * 60 * 60 * 24,
 })
