@@ -1,16 +1,17 @@
 {
   "expo": {
-    "name": "hermes-news",
+    "name": "Hermes",
     "slug": "hermes-news",
+    "scheme": "hermes-news",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
-    "userInterfaceStyle": "light",
+    "userInterfaceStyle": "dark",
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/splash-icon.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#0a0a0a"
     },
     "ios": {
       "supportsTablet": true
@@ -25,7 +26,8 @@
       "package": "com.sagittaerys.hermesnews"
     },
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
     "plugins": [
       "expo-router",
@@ -38,6 +40,7 @@
       "eas": {
         "projectId": "182dd174-cfa9-41be-9d1f-ba595d1a0129"
       }
-    }
+    },
+    "assetBundlePatterns": ["assets/**", "src/assets/**"]
   }
 }
