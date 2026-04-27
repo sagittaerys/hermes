@@ -96,7 +96,7 @@ export default function SearchScreen() {
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
-      {/* Header */}
+      {/* header */}
       <YStack
         paddingHorizontal="$4"
         paddingTop="$3"
@@ -123,7 +123,7 @@ export default function SearchScreen() {
           Find articles
         </Text>
 
-        {/* Search Input */}
+        {/* search */}
         <XStack
           alignItems="center"
           marginTop="$3"

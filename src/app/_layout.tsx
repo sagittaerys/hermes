@@ -7,6 +7,10 @@ import { QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
 import { SafeAreaProvider } from 'react-native-safe-area-context'
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_700Bold, Inter_900Black } from '@expo-google-fonts/inter'
+import {
+  PlayfairDisplay_700Bold,
+  PlayfairDisplay_900Black,
+} from '@expo-google-fonts/playfair-display'
 import * as SplashScreen from 'expo-splash-screen'
 
 import { tamaguiConfig } from '../../tamagui.config'
@@ -16,11 +20,15 @@ SplashScreen.preventAutoHideAsync()
 
 export default function RootLayout() {
   const [fontsLoaded, fontError] = useFonts({
-    Inter_400Regular,
-    Inter_500Medium,
-    Inter_700Bold,
-    Inter_900Black,
-  })
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_700Bold,
+  Inter_900Black,
+  PlayfairDisplay_700Bold,
+  PlayfairDisplay_900Black,
+})
+
+  
 
   useEffect(() => {
     if (fontsLoaded || fontError) {

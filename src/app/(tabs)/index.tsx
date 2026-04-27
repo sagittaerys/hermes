@@ -106,12 +106,7 @@ export default function FeedScreen() {
           >
             Live Wire
           </Text>
-          <Text
-            color="#f5f5f5"
-            fontSize={20}
-            fontWeight="900"
-            letterSpacing={-0.5}
-          >
+          <Text fontFamily="$display" fontSize="$8">
             Hermes
           </Text>
         </YStack>
