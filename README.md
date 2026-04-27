@@ -1,6 +1,6 @@
 # Hermes — Premium News App
 
-> A beautifully crafted editorial news experience built with React Native and Expo, powered by The New York Times API.
+> A beautifully crafted editorial news experience built with React Native, Expo and TamagUI, powered by The New York Times API.
 
 ---
 
@@ -103,25 +103,59 @@ While articles are loading, shimmer skeleton cards animate between two dark tone
 
 ```
 src/
-├── app/                        # Expo Router file-based routing
-│   ├── _layout.tsx             # Root layout with all providers
+├── app/                          # Expo Router file-based routing
+│   ├── _layout.tsx               # Root layout with all providers
 │   ├── (tabs)/
-│   │   ├── _layout.tsx         # Tab navigator with animated tab bar
-│   │   ├── index.tsx           # Feed screen
-│   │   ├── search.tsx          # Search screen
-│   │   └── bookmarks.tsx       # Saved articles screen
-│   └── article/[id].tsx        # Article detail screen
-├── features/                   # Feature-based modules
-│   ├── feed/                   # Feed components and hooks
-│   ├── search/                 # Search components and hooks
-│   ├── bookmarks/              # Bookmarks store and components
-│   └── article/                # Article detail components
-├── shared/                     # Cross-feature reusable code
-│   ├── components/             # Skeleton, ErrorState, EmptyState, Icon
-│   ├── lib/                    # API client, QueryClient, storage
-│   ├── hooks/                  # useNetworkStatus
-│   └── types/                  # Article and API types
-└── constants/                  # Theme, categories, section colors
+│   │   ├── _layout.tsx           # Tab navigator with animated tab bar
+│   │   ├── index.tsx             # Feed screen
+│   │   ├── search.tsx            # Search screen
+│   │   └── bookmarks.tsx         # Saved articles screen
+│   └── article/
+│       └── [id].tsx              # Article detail screen
+├── constants/
+│   ├── categories.ts             # NYT sections, icons, section colors
+│   └── theme.ts                  # Font constants, animation config
+├── features/
+│   ├── article/
+│   │   └── components/
+│   │       ├── ArticleBody.tsx
+│   │       ├── ArticleHero.tsx
+│   │       └── ArticleWebView.tsx
+│   ├── bookmarks/
+│   │   ├── components/
+│   │   │   ├── BookmarkButton.tsx
+│   │   │   └── BookmarksList.tsx
+│   │   └── store.ts              # Zustand bookmarks store
+│   ├── feed/
+│   │   ├── components/
+│   │   │   ├── ArticleCard.tsx   # Default, grid and large variants
+│   │   │   ├── CategoryTabs.tsx  # Animated tab indicator
+│   │   │   └── HeroCard.tsx      # Featured hero card
+│   │   └── hooks/
+│   │       ├── useFeed.ts        # TanStack Query — top stories
+│   │       └── useTopStories.ts  # Fetcher + normalizer
+│   └── search/
+│       ├── components/
+│       │   ├── SearchBar.tsx
+│       │   └── SearchResults.tsx
+│       └── hooks/
+│           └── useSearch.ts      # Debounced search query
+└── shared/
+    ├── components/
+    │   ├── EmptyState.tsx
+    │   ├── ErrorState.tsx
+    │   ├── Icon.tsx
+    │   ├── SkeletonCard.tsx      # Shimmer skeleton for feed
+    │   └── SkeletonHero.tsx      # Shimmer skeleton for hero
+    ├── hooks/
+    │   └── useNetworkStatus.ts
+    ├── lib/
+    │   ├── api.ts                # Axios instance + NYT interceptors
+    │   ├── queryClient.ts        # TanStack QueryClient config
+    │   └── storage.ts            # Storage adapter
+    └── types/
+        ├── api.ts                # Raw NYT API response types
+        └── article.ts            # Normalized Article type
 ```
 
 **Pattern:** Raw NYT API responses are normalized into a single internal `Article` type in the data layer before reaching any component. This decouples the UI completely from the API shape.
