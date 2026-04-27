@@ -1,5 +1,42 @@
 import { config } from '@tamagui/config/v3'
 import { createTamagui, createTokens } from 'tamagui'
+import { createFont } from 'tamagui'
+
+const playfairFont = createFont({
+  family: 'PlayfairDisplay_900Black',
+  size: {
+    1: 12, 2: 14, 3: 16, 4: 18, 5: 20,
+    6: 24, 7: 28, 8: 32, 9: 40, 10: 48,
+  },
+  lineHeight: {
+    1: 17, 2: 22, 3: 25, 4: 28, 5: 30,
+    6: 34, 7: 38, 8: 44, 9: 52, 10: 60,
+  },
+  weight: {
+    4: '400', 7: '700', 9: '900',
+  },
+  letterSpacing: {
+    4: 0, 7: -0.5,
+  },
+})
+
+const playfairBoldFont = createFont({
+  family: 'PlayfairDisplay_700Bold',
+  size: {
+    1: 12, 2: 14, 3: 16, 4: 18, 5: 20,
+    6: 24, 7: 28, 8: 32, 9: 40, 10: 48,
+  },
+  lineHeight: {
+    1: 17, 2: 22, 3: 25, 4: 28, 5: 30,
+    6: 34, 7: 38, 8: 44, 9: 52, 10: 60,
+  },
+  weight: {
+    4: '400', 7: '700',
+  },
+  letterSpacing: {
+    4: 0, 7: -0.5,
+  },
+})
 
 const tokens = createTokens({
   ...config.tokens,
@@ -63,6 +100,11 @@ const hermesTheme = {
 export const tamaguiConfig = createTamagui({
   ...config,
   tokens,
+  fonts: {
+  ...config.fonts,
+  heading: playfairBoldFont,
+  display: playfairFont,
+},
   themes: {
     ...config.themes,
     dark: {
@@ -87,6 +129,7 @@ export const tamaguiConfig = createTamagui({
   },
   animations: config.animations,
 })
+
 
 export default tamaguiConfig
 
