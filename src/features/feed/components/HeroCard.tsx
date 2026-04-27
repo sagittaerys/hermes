@@ -10,7 +10,6 @@ import { useBookmarksStore } from '@features/bookmarks/store'
 
 dayjs.extend(relativeTime)
 
-const { width } = Dimensions.get('window')
 const HERO_HEIGHT = 480
 
 interface HeroCardProps {
@@ -115,7 +114,8 @@ export function HeroCard({ article, onPress }: HeroCardProps) {
         <Text
           color="#f5f5f5"
           fontSize={22}
-          fontWeight="800"
+          fontFamily="$display"
+          
           lineHeight={30}
           numberOfLines={3}
         >
@@ -159,17 +159,19 @@ export function HeroCard({ article, onPress }: HeroCardProps) {
 
 const styles = StyleSheet.create({
   container: {
-    width,
+    width: '100%',
     height: HERO_HEIGHT,
     backgroundColor: '#111111',
   },
   image: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  imageFallback: {
-    ...StyleSheet.absoluteFillObject,
-    backgroundColor: '#1c1c1c',
-  },
+  width: '100%',
+  height: HERO_HEIGHT,
+},
+imageFallback: {
+  width: '100%',
+  height: HERO_HEIGHT,
+  backgroundColor: '#1c1c1c',
+},
   featuredBadge: {
     backgroundColor: '#C41E3A',
     paddingHorizontal: 8,

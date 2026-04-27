@@ -2,17 +2,20 @@ import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Image } from 'expo-image'
 import { Text, YStack, XStack } from 'tamagui'
 import { Ionicons } from '@expo/vector-icons'
+import { getSectionColor } from '@/constants/categories'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
   withTiming,
   withSpring,
+  withDelay
 } from 'react-native-reanimated'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Article } from '@shared/types/article'
 import { useBookmarksStore } from '@features/bookmarks/store'
 import { useEffect } from 'react'
+
 
 dayjs.extend(relativeTime)
 
@@ -39,14 +42,12 @@ export function ArticleCard({
   const translateY = useSharedValue(24)
 
   useEffect(() => {
-    const delay = index * 80
-    opacity.value = withTiming(1, { duration: 400 })
-    translateY.value = withSpring(0, {
-      damping: 18,
-      stiffness: 180,
-      delay,
-    } as any)
-  }, [])
+  opacity.value = withDelay(index * 80, withTiming(1, { duration: 400 }))
+  translateY.value = withDelay(index * 80, withSpring(0, {
+    damping: 18,
+    stiffness: 180,
+  }))
+}, [])
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -80,7 +81,18 @@ export function ArticleCard({
             transition={300}
           />
         ) : (
-          <View style={styles.gridImageFallback} />
+         <View style={[styles.largeImageFallback, { backgroundColor: getSectionColor(article.section) }]}>
+  <Text
+    color="#333333"
+    fontSize={12}
+    fontWeight="700"
+    letterSpacing={2}
+    textTransform="uppercase"
+  >
+    {article.section}
+  </Text>
+</View>
+
         )}
         <TouchableOpacity
           style={styles.gridBookmark}
@@ -114,7 +126,7 @@ export function ArticleCard({
           <Text
             color="#f5f5f5"
             fontSize={13}
-            fontWeight="700"
+            fontFamily="$display"
             lineHeight={18}
             numberOfLines={3}
           >
@@ -161,8 +173,9 @@ export function ArticleCard({
 
         <Text
           color="#f5f5f5"
-          fontSize={15}
-          fontWeight="700"
+          fontSize={13}
+          // fontWeight="700"
+          fontFamily="$display"
           lineHeight={21}
           numberOfLines={3}
         >
@@ -188,7 +201,7 @@ export function ArticleCard({
             transition={300}
           />
         ) : (
-          <View style={styles.imageFallback} />
+          <View style={[styles.imageFallback, { backgroundColor: getSectionColor(article.section) }]} />
         )}
         <TouchableOpacity
           style={styles.bookmarkButton}
@@ -249,14 +262,25 @@ function LargeCard({
         onPress={() => onPress(article)}
       >
         {article.imageUrl ? (
-          <Image
-            source={{ uri: article.imageUrl }}
-            style={styles.largeImage}
-            contentFit="cover"
-            transition={300}
-          />
-        ) : (
-          <View style={styles.largeImageFallback} />
+  <Image
+    source={{ uri: article.imageUrl }}
+    style={styles.largeImage}
+    contentFit="cover"
+    transition={300}
+  />
+) : (
+  <View style={[styles.largeImageFallback, { backgroundColor: getSectionColor(article.section) }]}>
+    <Text
+      color="#333333"
+      fontSize={12}
+      fontWeight="700"
+      letterSpacing={2}
+      textTransform="uppercase"
+    >
+      {article.section}
+    </Text>
+  </View>
+
         )}
 
         <TouchableOpacity
@@ -292,7 +316,7 @@ function LargeCard({
           <Text
             color="#f5f5f5"
             fontSize={18}
-            fontWeight="800"
+            fontFamily="$display"
             lineHeight={25}
             numberOfLines={3}
           >
@@ -390,10 +414,11 @@ const styles = StyleSheet.create({
     height: 200,
   },
   largeImageFallback: {
-    width: '100%',
-    height: 200,
-    backgroundColor: '#1c1c1c',
-  },
+  width: '100%',
+  height: 200,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
   largeBookmark: {
     position: 'absolute',
     top: 12,

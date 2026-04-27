@@ -6,61 +6,48 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
-  withSpring,
   withTiming,
 } from 'react-native-reanimated'
 import { useEffect } from 'react'
 
-interface TabBarIconProps {
-  name: keyof typeof Ionicons.glyphMap
-  color: string
-  focused: boolean
+
+
+function TabBarIcon({ name, color }: any) {
+  return <Ionicons name={name} size={20} color={color} />
 }
 
-function TabBarIcon({ name, color, focused }: TabBarIconProps) {
-  const scale = useSharedValue(1)
-  const opacity = useSharedValue(focused ? 1 : 0.5)
 
-  useEffect(() => {
-    if (focused) {
-      scale.value = withSpring(1.15, { damping: 12, stiffness: 200 })
-      opacity.value = withTiming(1, { duration: 200 })
-    } else {
-      scale.value = withSpring(1, { damping: 12, stiffness: 200 })
-      opacity.value = withTiming(0.5, { duration: 200 })
-    }
-  }, [focused])
 
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-    opacity: opacity.value,
-  }))
-
-  return (
-    <Animated.View style={animatedStyle}>
-      <Ionicons name={name} size={24} color={color} />
-    </Animated.View>
-  )
-}
-
-function TabBarDot({ focused }: { focused: boolean }) {
+function TabItem({ icon, label, focused, color }: any) {
   const opacity = useSharedValue(focused ? 1 : 0)
-  const scale = useSharedValue(focused ? 1 : 0)
 
   useEffect(() => {
     opacity.value = withTiming(focused ? 1 : 0, { duration: 200 })
-    scale.value = withSpring(focused ? 1 : 0, { damping: 12, stiffness: 200 })
   }, [focused])
 
-  const animatedStyle = useAnimatedStyle(() => ({
+  const animatedLine = useAnimatedStyle(() => ({
     opacity: opacity.value,
-    transform: [{ scale: scale.value }],
   }))
 
   return (
-    <Animated.View style={[styles.dot, animatedStyle]} />
+    <View style={styles.tabItem}>
+      <TabBarIcon name={icon} color={color} />
+
+      <Animated.Text
+        style={[
+          styles.label,
+          { color: focused ? '#FFFFFF' : '#666666' },
+        ]}
+      >
+        {label}
+      </Animated.Text>
+
+      <Animated.View style={[styles.underline, animatedLine]} />
+    </View>
   )
 }
+
+
 
 export default function TabLayout() {
   const insets = useSafeAreaInsets()
@@ -69,70 +56,71 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         headerShown: false,
+
+        tabBarShowLabel: false, 
+
         tabBarStyle: {
           position: 'absolute',
           borderTopWidth: 0,
           elevation: 0,
-          height: 60 + insets.bottom,
+          height: 64 + insets.bottom,
+          paddingTop: 18,
+          paddingBottom: 6 + insets.bottom,
           backgroundColor: 'transparent',
         },
+
         tabBarBackground: () => (
           <BlurView
-            intensity={80}
+            intensity={140}
             tint="dark"
             style={StyleSheet.absoluteFillObject}
           />
         ),
-        tabBarActiveTintColor: '#f5f5f5',
+
+        tabBarActiveTintColor: '#FFFFFF',
         tabBarInactiveTintColor: '#666666',
-        tabBarShowLabel: false,
       }}
     >
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Feed',
           tabBarIcon: ({ color, focused }) => (
-            <View style={styles.tabItem}>
-              <TabBarIcon
-                name={focused ? 'newspaper' : 'newspaper-outline'}
-                color={color}
-                focused={focused}
-              />
-              <TabBarDot focused={focused} />
-            </View>
+            <TabItem
+              icon={focused ? 'newspaper' : 'newspaper-outline'}
+              label="FEEDS"
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
+
+      
+
       <Tabs.Screen
         name="search"
         options={{
-          title: 'Search',
           tabBarIcon: ({ color, focused }) => (
-            <View style={styles.tabItem}>
-              <TabBarIcon
-                name={focused ? 'search' : 'search-outline'}
-                color={color}
-                focused={focused}
-              />
-              <TabBarDot focused={focused} />
-            </View>
+            <TabItem
+              icon={focused ? 'search' : 'search-outline'}
+              label="SEARCH"
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
+
       <Tabs.Screen
         name="bookmarks"
         options={{
-          title: 'Saved',
           tabBarIcon: ({ color, focused }) => (
-            <View style={styles.tabItem}>
-              <TabBarIcon
-                name={focused ? 'bookmark' : 'bookmark-outline'}
-                color={color}
-                focused={focused}
-              />
-              <TabBarDot focused={focused} />
-            </View>
+            <TabItem
+              icon={focused ? 'bookmark' : 'bookmark-outline'}
+              label="SAVED"
+              color={color}
+              focused={focused}
+            />
           ),
         }}
       />
@@ -140,15 +128,25 @@ export default function TabLayout() {
   )
 }
 
+
+
 const styles = StyleSheet.create({
   tabItem: {
     alignItems: 'center',
+    justifyContent: 'center',
     gap: 4,
   },
-  dot: {
-    width: 4,
-    height: 4,
-    borderRadius: 2,
+
+  label: {
+    fontSize: 9,
+    fontWeight: '600',
+  },
+
+  underline: {
+    marginTop: 6,
+    height: 2,
+    width: 50,
     backgroundColor: '#C41E3A',
+    borderRadius: 2,
   },
 })

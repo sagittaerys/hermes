@@ -7,6 +7,25 @@ export interface Category {
   iconFamily: 'Ionicons' | 'Feather' | 'MaterialIcons'
 }
 
+export const SECTION_COLORS: Record<string, string> = {
+  technology: '#0d1117',
+  business: '#0d1a0d',
+  sports: '#1a0d0d',
+  health: '#0d1a1a',
+  arts: '#1a0d1a',
+  science: '#0d0f1a',
+  world: '#1a1500',
+  travel: '#001a1a',
+  fashion: '#1a0d15',
+  food: '#1a1000',
+  home: '#111111',
+  general: '#1c1c1c',
+}
+
+export const getSectionColor = (section: string): string => {
+  return SECTION_COLORS[section.toLowerCase()] ?? SECTION_COLORS.general
+}
+
 export const CATEGORIES: Category[] = [
   { label: 'Top Stories', slug: 'home',       icon: 'home',              iconFamily: 'Ionicons' },
   { label: 'World',       slug: 'world',      icon: 'globe-outline',     iconFamily: 'Ionicons' },

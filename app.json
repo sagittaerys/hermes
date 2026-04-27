@@ -10,7 +10,7 @@
     "newArchEnabled": true,
     "splash": {
       "image": "./assets/hermes-splash.png",
-      "resizeMode": "contain",
+       "resizeMode": "cover",
       "backgroundColor": "#0a0a0a"
     },
     "ios": {
