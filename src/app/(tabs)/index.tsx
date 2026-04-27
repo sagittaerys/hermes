@@ -53,37 +53,48 @@ export default function FeedScreen() {
     setActiveSection(section);
   }, []);
 
-  const heroArticle = data?.[0];
-  const listArticles = data?.slice(1) ?? [];
+  // const heroArticle = data?.[0];
+  // const listArticles = data?.slice(1) ?? [];
+    const articles = data ?? []
 
   const renderItem = useCallback(
-    ({ item, index }: { item: Article; index: number }) => (
+  ({ item, index }: { item: Article; index: number }) => {
+    if (index === 0) {
+      return (
+        <HeroCard
+          article={item}
+          onPress={handleArticlePress}
+        />
+      )
+    }
+    return (
       <ArticleCard
         article={item}
         onPress={handleArticlePress}
         index={index}
-        variant={index % 6 === 0 && index !== 0 ? "grid" : "default"}
+        variant={index % 6 === 0 ? 'grid' : 'default'}
       />
-    ),
-    [handleArticlePress],
-  );
+    )
+  },
+  [handleArticlePress]
+)
 
-  const renderHeader = useCallback(() => {
-    if (isLoading) {
-      return (
-        <>
-          <SkeletonHero />
-          <SkeletonList />
-        </>
-      );
-    }
+  // const renderHeader = useCallback(() => {
+  //   if (isLoading) {
+  //     return (
+  //       <>
+  //         <SkeletonHero />
+  //         <SkeletonList />
+  //       </>
+  //     );
+  //   }
 
-    if (heroArticle) {
-      return <HeroCard article={heroArticle} onPress={handleArticlePress} />;
-    }
+  //   if (heroArticle) {
+  //     return <HeroCard article={heroArticle} onPress={handleArticlePress} />;
+  //   }
 
-    return null;
-  }, [isLoading, heroArticle, handleArticlePress]);
+  //   return null;
+  // }, [isLoading, heroArticle, handleArticlePress]);
 
   return (
     <View style={[styles.container, { paddingTop: insets.top }]}>
@@ -157,27 +168,34 @@ export default function FeedScreen() {
       {/* feed */}
       {!isError && (
         <FlashList
-          data={isLoading ? [] : listArticles}
-          renderItem={renderItem}
-          keyExtractor={(item) => item.id}
-          getItemType={(item, index) => {
-            if (index === 0) return "hero";
-            return index % 6 === 0 ? "grid" : "default";
-          }}
-          ListHeaderComponent={renderHeader}
-          refreshControl={
-            <RefreshControl
-              refreshing={refreshing}
-              onRefresh={handleRefresh}
-              tintColor="#C41E3A"
-              colors={["#C41E3A"]}
-            />
-          }
-          contentContainerStyle={{
-            paddingBottom: 80 + insets.bottom,
-          }}
-          showsVerticalScrollIndicator={false}
-        />
+  data={isLoading ? [] : articles}
+  renderItem={renderItem}
+  keyExtractor={(item) => item.id}
+  getItemType={(item, index) => {
+    if (index === 0) return 'hero'
+    return index % 6 === 0 ? 'grid' : 'default'
+  }}
+  ListHeaderComponent={
+    isLoading ? (
+      <>
+        <SkeletonHero />
+        <SkeletonList />
+      </>
+    ) : null
+  }
+  refreshControl={
+    <RefreshControl
+      refreshing={refreshing}
+      onRefresh={handleRefresh}
+      tintColor="#C41E3A"
+      colors={['#C41E3A']}
+    />
+  }
+  contentContainerStyle={{
+    paddingBottom: 80 + insets.bottom,
+  }}
+  showsVerticalScrollIndicator={false}
+/>
       )}
     </View>
   );
