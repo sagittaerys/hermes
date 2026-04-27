@@ -8,14 +8,17 @@ const DEBOUNCE_MS = 500
 const MIN_QUERY_LENGTH = 3
 
 const normalizeSearchResult = (doc: NYTSearchResponse['response']['docs'][0]): Article => {
-  const image = doc.multimedia?.find((m) => m.subtype === 'xlarge' || m.subtype === 'master1050')
+  // nyt api doesn't return images on free tier 
+  
+  const imageUrl = null
+
   return {
     id: doc._id,
     title: doc.headline.main,
     abstract: doc.abstract || doc.snippet,
     url: doc.web_url,
-    imageUrl: image ? `https://www.nytimes.com/${image.url}` : null,
-    thumbnailUrl: image ? `https://www.nytimes.com/${image.url}` : null,
+    imageUrl,
+    thumbnailUrl: null,
     byline: doc.byline?.original?.replace(/^By /i, '') ?? '',
     publishedDate: doc.pub_date,
     section: doc.section_name ?? 'general',
@@ -26,16 +29,16 @@ const normalizeSearchResult = (doc: NYTSearchResponse['response']['docs'][0]): A
 
 export const useSearch = (rawQuery: string) => {
   const [debouncedQuery, setDebouncedQuery] = useState(rawQuery)
-
+  
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedQuery(rawQuery)
     }, DEBOUNCE_MS)
     return () => clearTimeout(timer)
   }, [rawQuery])
-
+  
   const isEnabled = debouncedQuery.trim().length >= MIN_QUERY_LENGTH
-
+  
   return useQuery({
     queryKey: ['search', debouncedQuery],
     queryFn: async () => {
@@ -43,8 +46,9 @@ export const useSearch = (rawQuery: string) => {
         params: {
           q: debouncedQuery,
           sort: 'newest',
-          fl: 'headline,abstract,web_url,pub_date,byline,multimedia,section_name,snippet,_id',
+          // fl: 'headline,abstract,web_url,pub_date,byline,multimedia,section_name,snippet,_id',
         },
+        
       })
       return data.response.docs.map(normalizeSearchResult)
     },

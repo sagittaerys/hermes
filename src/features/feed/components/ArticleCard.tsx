@@ -2,6 +2,7 @@ import { TouchableOpacity, StyleSheet, View } from 'react-native'
 import { Image } from 'expo-image'
 import { Text, YStack, XStack } from 'tamagui'
 import { Ionicons } from '@expo/vector-icons'
+import { getSectionColor } from '@/constants/categories'
 import Animated, {
   useSharedValue,
   useAnimatedStyle,
@@ -80,7 +81,18 @@ export function ArticleCard({
             transition={300}
           />
         ) : (
-          <View style={styles.gridImageFallback} />
+         <View style={[styles.largeImageFallback, { backgroundColor: getSectionColor(article.section) }]}>
+  <Text
+    color="#333333"
+    fontSize={12}
+    fontWeight="700"
+    letterSpacing={2}
+    textTransform="uppercase"
+  >
+    {article.section}
+  </Text>
+</View>
+
         )}
         <TouchableOpacity
           style={styles.gridBookmark}
@@ -188,7 +200,7 @@ export function ArticleCard({
             transition={300}
           />
         ) : (
-          <View style={styles.imageFallback} />
+          <View style={[styles.imageFallback, { backgroundColor: getSectionColor(article.section) }]} />
         )}
         <TouchableOpacity
           style={styles.bookmarkButton}
@@ -249,14 +261,25 @@ function LargeCard({
         onPress={() => onPress(article)}
       >
         {article.imageUrl ? (
-          <Image
-            source={{ uri: article.imageUrl }}
-            style={styles.largeImage}
-            contentFit="cover"
-            transition={300}
-          />
-        ) : (
-          <View style={styles.largeImageFallback} />
+  <Image
+    source={{ uri: article.imageUrl }}
+    style={styles.largeImage}
+    contentFit="cover"
+    transition={300}
+  />
+) : (
+  <View style={[styles.largeImageFallback, { backgroundColor: getSectionColor(article.section) }]}>
+    <Text
+      color="#333333"
+      fontSize={12}
+      fontWeight="700"
+      letterSpacing={2}
+      textTransform="uppercase"
+    >
+      {article.section}
+    </Text>
+  </View>
+
         )}
 
         <TouchableOpacity
@@ -390,10 +413,11 @@ const styles = StyleSheet.create({
     height: 200,
   },
   largeImageFallback: {
-    width: '100%',
-    height: 200,
-    backgroundColor: '#1c1c1c',
-  },
+  width: '100%',
+  height: 200,
+  alignItems: 'center',
+  justifyContent: 'center',
+},
   largeBookmark: {
     position: 'absolute',
     top: 12,

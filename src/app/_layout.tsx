@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { Stack } from 'expo-router'
 import { StatusBar } from 'expo-status-bar'
-import { PortalProvider } from '@tamagui/portal'
+
 import { TamaguiProvider } from 'tamagui'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { GestureHandlerRootView } from 'react-native-gesture-handler'
@@ -44,12 +44,12 @@ export default function RootLayout() {
     <GestureHandlerRootView style={{ flex: 1 }}>
       <SafeAreaProvider>
         <TamaguiProvider config={tamaguiConfig} defaultTheme="dark">
-          <PortalProvider>
+          
             <QueryClientProvider client={queryClient}>
               <StatusBar style="light" />
               <Stack screenOptions={{ headerShown: false }} />
             </QueryClientProvider>
-          </PortalProvider>
+         
         </TamaguiProvider>
       </SafeAreaProvider>
     </GestureHandlerRootView>
