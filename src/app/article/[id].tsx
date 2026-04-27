@@ -324,8 +324,7 @@ const scrollY = useScrollOffset(animatedRef)
           <Text
             color="#f5f5f5"
             fontSize={26}
-            // fontFamily="$display"
-            fontWeight={700}
+            fontFamily="$heading"
             lineHeight={34}
             letterSpacing={-0.5}
           >
@@ -437,19 +436,21 @@ const styles = StyleSheet.create({
     backgroundColor: '#1c1c1c',
   },
   floatingBack: {
-    position: 'absolute',
-    left: 16,
-    padding: 8,
-    borderRadius: 20,
-  },
-  floatingActions: {
-    position: 'absolute',
-    right: 16,
-    flexDirection: 'row',
-    gap: 16,
-    padding: 8,
-    borderRadius: 20,
-  },
+  position: 'absolute',
+  left: 16,
+  padding: 8,
+  borderRadius: 20,
+  backgroundColor: 'rgba(0,0,0,0.5)',
+},
+floatingActions: {
+  position: 'absolute',
+  right: 16,
+  flexDirection: 'row',
+  gap: 16,
+  padding: 8,
+  borderRadius: 20,
+  backgroundColor: 'rgba(0,0,0,0.5)',
+},
   readButton: {
     flexDirection: 'row',
     alignItems: 'center',

@@ -136,8 +136,9 @@ export default function FeedScreen() {
             </Text>
             <Text
               color="#f5f5f5"
-              fontSize={28}
-              fontWeight="900"
+              fontSize={20}
+              // fontWeight="900"
+              fontFamily="$display"
               letterSpacing={-1}
               textTransform="capitalize"
             >

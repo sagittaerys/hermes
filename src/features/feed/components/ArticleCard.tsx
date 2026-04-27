@@ -8,12 +8,14 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
   withSpring,
+  withDelay
 } from 'react-native-reanimated'
 import dayjs from 'dayjs'
 import relativeTime from 'dayjs/plugin/relativeTime'
 import { Article } from '@shared/types/article'
 import { useBookmarksStore } from '@features/bookmarks/store'
 import { useEffect } from 'react'
+
 
 dayjs.extend(relativeTime)
 
@@ -40,14 +42,12 @@ export function ArticleCard({
   const translateY = useSharedValue(24)
 
   useEffect(() => {
-    const delay = index * 80
-    opacity.value = withTiming(1, { duration: 400 })
-    translateY.value = withSpring(0, {
-      damping: 18,
-      stiffness: 180,
-      delay,
-    } as any)
-  }, [])
+  opacity.value = withDelay(index * 80, withTiming(1, { duration: 400 }))
+  translateY.value = withDelay(index * 80, withSpring(0, {
+    damping: 18,
+    stiffness: 180,
+  }))
+}, [])
 
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
@@ -126,7 +126,7 @@ export function ArticleCard({
           <Text
             color="#f5f5f5"
             fontSize={13}
-            fontWeight="700"
+            fontFamily="$display"
             lineHeight={18}
             numberOfLines={3}
           >
@@ -173,8 +173,9 @@ export function ArticleCard({
 
         <Text
           color="#f5f5f5"
-          fontSize={15}
-          fontWeight="700"
+          fontSize={13}
+          // fontWeight="700"
+          fontFamily="$display"
           lineHeight={21}
           numberOfLines={3}
         >
@@ -315,7 +316,7 @@ function LargeCard({
           <Text
             color="#f5f5f5"
             fontSize={18}
-            fontWeight="800"
+            fontFamily="$display"
             lineHeight={25}
             numberOfLines={3}
           >

@@ -114,7 +114,8 @@ export function HeroCard({ article, onPress }: HeroCardProps) {
         <Text
           color="#f5f5f5"
           fontSize={22}
-          fontWeight="800"
+          fontFamily="$display"
+          
           lineHeight={30}
           numberOfLines={3}
         >
