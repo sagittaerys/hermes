@@ -324,7 +324,8 @@ const scrollY = useScrollOffset(animatedRef)
           <Text
             color="#f5f5f5"
             fontSize={26}
-            fontFamily="$heading"
+            // fontFamily="$display"
+            fontWeight={700}
             lineHeight={34}
             letterSpacing={-0.5}
           >
