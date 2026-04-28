@@ -19,7 +19,6 @@
     "@tamagui/font-inter": "2.0.0-rc.40",
     "@tamagui/portal": "2.0.0-rc.40",
     "@tanstack/react-query": "^5.100.5",
-    "axios": "^1.15.2",
     "dayjs": "^1.11.20",
     "expo": "~54.0.34",
     "expo-blur": "~15.0.8",

@@ -1,6 +1,6 @@
 import { NYTTopStoriesResponse, NYTTopStoriesResult } from '@shared/types/api'
 import { Article, ArticleSection } from '@shared/types/article'
-import { nytApi } from '@shared/lib/api'
+import { nytFetch } from '@shared/lib/api'  
 
 const IMAGE_FORMATS = ['superJumbo', 'Large', 'mediumThreeByTwo440', 'Normal']
 const THUMB_FORMATS = ['thumbnail', 'Small', 'mediumThreeByTwo210']
@@ -32,8 +32,6 @@ export const normalizeTopStory = (item: NYTTopStoriesResult): Article => ({
 })
 
 export const fetchTopStories = async (section: ArticleSection): Promise<Article[]> => {
-  const { data } = await nytApi.get<NYTTopStoriesResponse>(
-    `/topstories/v2/${section}.json`
-  )
+  const data = await nytFetch<NYTTopStoriesResponse>(`/topstories/v2/${section}.json`) // 👈 updated
   return data.results.map(normalizeTopStory)
 }

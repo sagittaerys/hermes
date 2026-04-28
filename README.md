@@ -150,7 +150,7 @@ src/
     ├── hooks/
     │   └── useNetworkStatus.ts
     ├── lib/
-    │   ├── api.ts                # Axios instance + NYT interceptors
+    │   ├── api.ts                # fetch wrapper + NYT error handling
     │   ├── queryClient.ts        # TanStack QueryClient config
     │   └── storage.ts            # Storage adapter
     └── types/
@@ -172,7 +172,6 @@ src/
 | `react-native-reanimated` (v4) | High-performance animations on the UI thread |
 | `@tanstack/react-query` | Server state management and caching |
 | `zustand` | Client state management (bookmarks) |
-| `axios` | HTTP client with interceptors |
 | `expo-image` | Optimized image loading with caching |
 | `expo-linear-gradient` | Gradient overlays on hero cards |
 | `expo-blur` | Frosted glass tab bar background |

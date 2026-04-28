@@ -72,8 +72,8 @@ export default function BookmarksScreen() {
           </Text>
           <Text
             color="#f5f5f5"
-            fontSize={28}
-            fontWeight="900"
+            fontSize={25}
+            fontFamily="$display"
             letterSpacing={-1}
           >
             Saved Articles

@@ -11,7 +11,7 @@
     "splash": {
       "image": "./assets/hermes-splash.png",
        "resizeMode": "cover",
-      "backgroundColor": "#0a0a0a"
+      "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true
@@ -30,12 +30,19 @@
       "bundler": "metro"
     },
     "plugins": [
-      "expo-router",
-      "expo-font",
-      "expo-web-browser",
-      "expo-build-properties",
-      "expo-splash-screen"
-    ],
+  [
+    "expo-build-properties",
+    {
+      "android": {
+        "networkInspector": false
+      }
+    }
+  ],
+  "expo-router",
+  "expo-font",
+  "expo-web-browser",
+  "expo-splash-screen"
+],
     "extra": {
       "router": {},
       "eas": {

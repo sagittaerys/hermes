@@ -116,8 +116,9 @@ export default function SearchScreen() {
         </Text>
         <Text
           color="#f5f5f5"
-          fontSize={28}
-          fontWeight="900"
+          fontSize={25}
+          // fontWeight="900"
+          fontFamily="$display"
           letterSpacing={-1}
         >
           Find articles
